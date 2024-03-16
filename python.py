@@ -1,13 +1,20 @@
 class Solution:
-    def removeDuplicates(self, nums: list[int]) -> int:
-        for index in range (len(nums)):
-            j = index + 1
-            if (index + 1 < len(nums)):
-                if nums[index] == nums[j]:
-                    nums.pop(j)
+    def removeElement(self, nums: list[int], val: int) -> int:
+        i = 0
+        while True:
+            if (i >= len(nums)):
+                break
+            if (nums[i] == val):
+                nums.pop(i)
+                continue
+            i += 1
+        print(nums)
         return len(nums)
+          
 
-nums = [0,0,1,1,1,2,2,3,3,4]
+nums = [0,1,2,2,3,0,4,2]
+
+val = 2
 sol = Solution()
-asd = sol.removeDuplicates(nums)
+asd = sol.removeElement(nums, val)
 print(asd)

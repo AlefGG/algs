@@ -1,13 +1,9 @@
 class Solution:
-    def removeDuplicates(self, nums: list[int]) -> int:
-        for index in range (len(nums)):
-            j = index + 1
-            if (index + 1 < len(nums)):
-                if nums[index] == nums[j]:
-                    nums.pop(j)
-        return len(nums)
+    def getConcatenation(self, nums: list[int]) -> list[int]:
+        nums *= 2
+        return nums
 
-nums = [0,0,1,1,1,2,2,3,3,4]
+nums = [1,2,3]
 sol = Solution()
-asd = sol.removeDuplicates(nums)
+asd = sol.getConcatenation(nums)
 print(asd)

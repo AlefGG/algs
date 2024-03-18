@@ -1,13 +1,25 @@
 class Solution:
-    def removeDuplicates(self, nums: list[int]) -> int:
-        for index in range (len(nums)):
-            j = index + 1
-            if (index + 1 < len(nums)):
-                if nums[index] == nums[j]:
-                    nums.pop(j)
-        return len(nums)
+    def isValid(self, s: str) -> bool:
+        stack = []
+        i = 0
+        while i < len(s):
+            if stack == []:
+                stack.append(s[i])
+                i += 1
+                continue
+            if stack[-1] == "{" and s[i] == "}":
+                stack.pop()
+            elif stack[-1] == "[" and s[i] == "]":
+                stack.pop()
+            elif stack[-1] == "(" and s[i] == ")":
+                stack.pop()
+            else:
+                stack.append(s[i])
+            i += 1
+        return stack == []
 
-nums = [0,0,1,1,1,2,2,3,3,4]
+
+nums = "()"
 sol = Solution()
-asd = sol.removeDuplicates(nums)
+asd = sol.isValid(nums)
 print(asd)

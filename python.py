@@ -1,63 +1,75 @@
-from typing import Optional
-
-
 class ListNode:
-    def __init__(self, val=0, next=None):
+    def __init__(self, val, next_node = None):
         self.val = val
-        self.next = next
+        self.next = next_node
 
-class LinkedList:
+
+class MyLinkedList:
+
     def __init__(self):
         self.head = ListNode(-1)
         self.tail = self.head
 
-    def toString(self, list: ListNode):
-        res = []
-        while list:
-            res.append(list.val)
-            list = list.next
-        print(res)
+    def get(self, index: int) -> int:
+        curr = self.head.next
+        i = 0
+        while curr:
+            if i == index:
+                return curr.val
+            curr = curr.next
+            i += 1
+        return -1
 
-    def createLinkedListFromArray(self, lst: list) -> ListNode:
-        head = ListNode() 
-        curr = head
+    def addAtHead(self, val: int) -> None:
+        new = ListNode(val)
+        new.next = self.head.next
+        self.head.next = new
+        if not new.next:
+            self.tail = new
 
-        for val in lst:
-            curr.next = ListNode(val)  
-            curr = curr.next  
-        return head.next 
-class Solution:
-    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
-        head = ListNode(-1)
-        list3 = head
-        while list1 and list2:
-            if list1.val <= list2.val:
-                list3.next = list1
-                list3 = list3.next
-                list1 = list1.next
-            elif list1.val > list2.val:
-                list3.next = list2
-                list3 = list3.next
-                list2 = list2.next 
-        if not list2:
-            while list1:
-                list3.next = list1
-                list3 = list3.next 
-                list1 = list1.next
-        if not list1:
-            while list2:
-                list3.next = list2
-                list3 = list3.next 
-                list2 = list2.next
-        return head.next
+    def addAtTail(self, val: int) -> None:
+        self.tail.next = ListNode(val)
+        self.tail = self.tail.next
+
+    def addAtIndex(self, index: int, val: int) -> None:
+        if index < 0:
+            return
+        if index == 0:
+            self.addAtHead(val)
+        else:
+            curr = self.head
+            for _ in range(index):
+                if curr is None:
+                    return
+                curr = curr.next
+
+            if curr is None:
+                return
+            else:
+                new_node = ListNode(val)
+                new_node.next = curr.next
+                curr.next = new_node
+                if new_node.next is None:
+                    self.tail = new_node
+
+    def deleteAtIndex(self, index: int) -> None:
+        i = 0
+        curr = self.head
+        while i < index and curr:
+            i += 1
+            curr = curr.next
+        if curr and curr.next:
+            if curr.next == self.tail:
+                self.tail = curr
+            curr.next = curr.next.next
+
+        
 
 
-
-linkedList = LinkedList()
-sol = Solution()
-l1 = linkedList.createLinkedListFromArray([1,2,4])
-l2 = linkedList.createLinkedListFromArray([1,3,4])
-linkedList.toString(l1)
-linkedList.toString(l2)
-l3 = sol.mergeTwoLists(l1, l2)
-linkedList.toString(l3)
+# Your MyLinkedList object will be instantiated and called as such:
+# obj = MyLinkedList()
+# param_1 = obj.get(index)
+# obj.addAtHead(val)
+# obj.addAtTail(val)
+# obj.addAtIndex(index,val)
+# obj.deleteAtIndex(index)
